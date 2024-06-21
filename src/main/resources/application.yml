@@ -1,6 +1,12 @@
 spring:
   application:
     name: springKotlin
+  profiles:
+    active: test
+  jpa:
+    open-in-view: true
+
+
 
 server:
   port: 5000

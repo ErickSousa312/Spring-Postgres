@@ -45,4 +45,20 @@ class UserTest {
     @Test
     fun setPassword() {
     }
+
+    @Test
+    fun testEquals() {
+    }
+
+    @Test
+    fun testHashCode() {
+    }
+
+    @Test
+    fun copy() {
+    }
+
+    @Test
+    fun testToString() {
+    }
 }

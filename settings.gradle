@@ -6,4 +6,5 @@ pluginManagement {
         id 'org.jetbrains.kotlin.plugin.jpa' version "1.9.22"
     }
 }
+
 rootProject.name = 'springKotlin'

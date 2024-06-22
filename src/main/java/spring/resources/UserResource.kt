@@ -24,6 +24,11 @@ class UserResource @Autowired constructor(val userService: UserService) {
         val users = userService.findAll()
         return ResponseEntity.ok(users)
     }
+//    @GetMapping("/allByOrder")
+//    fun getUsersWithOrder(): ResponseEntity<List<User>> {
+//        val users = userService.getOrder()
+//        return ResponseEntity.ok(users)
+//    }
 
     @GetMapping(value =["/test/{id}"])
     fun getUserById(@PathVariable id: Long): ResponseEntity<User> {

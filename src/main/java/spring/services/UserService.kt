@@ -12,7 +12,7 @@ import spring.repositories.UserRepository
 //data object Error : UserResult()
 
 @Service
-class UserService @Autowired constructor (private val userRepository: UserRepository) {
+class UserService @Autowired constructor ( val userRepository: UserRepository) {
 
     fun findAll(): List<User> {
         val users = userRepository.findAll();

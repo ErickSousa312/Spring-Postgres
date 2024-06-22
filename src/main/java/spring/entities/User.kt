@@ -1,9 +1,12 @@
 package spring.entities
 import jakarta.persistence.*
-import java.io.Serializable
+import kotlinx.serialization.Contextual
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Serializer
 
+@Serializable
 @Entity
-@Table(name = "tb_users")
+@Table(name = "tb_users",schema = "public")
 class User(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -13,11 +16,10 @@ class User(
     private var phone: String? = null,
     private var password: String? = null,
 
-    @OneToMany(mappedBy = "client")
-    private var orders: List<Order?> = listOf()
+//    @OneToMany(mappedBy = "client")
+//    private var orders: List<Order?> = listOf()
 
-): Serializable{
-
+){
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -28,8 +30,4 @@ class User(
     override fun hashCode(): Int {
         return name?.hashCode() ?: 0
     }
-//    se quiser mais manual
-//    companion object {
-//        const val serialVersionUID: Long = 1L
-//    }
 }

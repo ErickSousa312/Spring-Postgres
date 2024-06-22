@@ -1,21 +1,31 @@
 package spring.entities
 
+import com.fasterxml.jackson.datatype.jsr310.ser.InstantSerializer
 import jakarta.persistence.*
-import java.io.Serializable
-import java.time.Instant
+import kotlinx.serialization.*
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
+import kotlinx.serialization.modules.SerializersModule
+import java.time.Instant
+@Serializable
 @Entity
 @Table(name = "tb_order", schema = "public")
 data class Order(
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     var id: Long? = null,
+
+    @Serializable(with = InstantIso8601Serializer::class)
+    @Contextual
     var moment: Instant? = null,
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
     var client: User? = null
-
-):Serializable {
+) {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -24,14 +34,27 @@ data class Order(
         other as Order
 
         if (id != other.id) return false
-        if (moment != other.moment) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        var result = id?.hashCode() ?: 0
-        result = 31 * result + (moment?.hashCode() ?: 0)
+        val result = id?.hashCode() ?: 0
         return result
     }
+
+
+}
+
+public object InstantIso8601Serializer : KSerializer<Instant> {
+    override val descriptor: SerialDescriptor =
+        PrimitiveSerialDescriptor("kotlinx.datetime.Instant", PrimitiveKind.STRING)
+
+    override fun deserialize(decoder: Decoder): Instant =
+        Instant.parse(decoder.decodeString())
+
+    override fun serialize(encoder: Encoder, value: Instant) {
+        encoder.encodeString(value.toString())
+    }
+
 }

@@ -1,23 +1,24 @@
 package spring.entities
 import jakarta.persistence.*
-import kotlinx.serialization.Serializable
+import java.io.Serializable
 
-@Serializable
 @Entity
 @Table(name = "tb_users")
 class User(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private var id: Long = 0,
-    @Column(name = "name")
     private var name: String? = null,
-    @Column(name = "email")
     private var email: String? = null,
-    @Column(name = "phone")
     private var phone: String? = null,
-    @Column(name = "password")
     private var password: String? = null,
-){
+
+    @OneToMany(mappedBy = "client")
+    private var orders: List<Order?> = listOf()
+
+): Serializable{
+
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

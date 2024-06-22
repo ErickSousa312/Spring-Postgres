@@ -1,19 +1,12 @@
 package spring.entities
 import com.fasterxml.jackson.annotation.JsonIgnore
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
 import jakarta.persistence.*
 import kotlinx.serialization.*
 import kotlinx.serialization.Transient
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.nullable
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlinx.serialization.json.Json
-import java.time.Instant
 
 @Serializable
 @Entity
@@ -25,16 +18,13 @@ class User(
     private var name: String? = null,
     private var email: String? = null,
     private var phone: String? = null,
-    @JsonIgnore
     private var password: String? = null,
 
     @Transient
     @Serializable(with = OrderListSerializer::class)
-    @OneToMany(mappedBy = "client", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
-    var orders: List<Order>? = mutableListOf()
-
-){
-
+    @OneToMany(mappedBy = "client", cascade = [CascadeType.REMOVE], fetch = FetchType.LAZY)
+    var orders: List<Order>? = mutableListOf(),
+    ){
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

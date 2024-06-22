@@ -20,12 +20,12 @@ public class Main {
     }
 
     private ServiceKotlin serviceKotlin;
-    private UserResource userResource;
+//    private UserResource userResource;
 
     @Autowired
     public void KotlinController(ServiceKotlin serviceKotlin, UserResource userResource){
         this.serviceKotlin = serviceKotlin;
-        this.userResource = userResource;
+//        this.userResource = userResource;
     }
 
     @GetMapping("/oi")
@@ -34,7 +34,7 @@ public class Main {
         return serviceKotlin.nameString();
     }
     @GetMapping("/teste")
-    public ResponseEntity<User> testServer2() {
-        return userResource.findAll();
+    public String testServer2() {
+        return "oi";
     }
 }

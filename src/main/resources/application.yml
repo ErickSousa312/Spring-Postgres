@@ -1,10 +1,18 @@
 spring:
   application:
     name: springKotlin
-  profiles:
-    active: test
   jpa:
-    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    open-in-view: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    url: jdbc:postgresql://localhost:5432/db
+    username: admin
+    password: root
+    driver-class-name: org.postgresql.Driver
 
 server:
   port: 5000
